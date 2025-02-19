@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./api-gateway/Dockerfile
+    volumes:
+      - ./api-gateway:/app           # Mount the entire app directory
+      - ./utils:/app/utils
+    ports:
+      - '3000:3000'
+    depends_on:
+      - hierarchy-service
+      - user-service
+      - database
+    environment:
+      - NODE_ENV=development
+
+  user-service:
+    build: ./services/user-service
+    ports:
+      - '3001:3001'
+    environment:
+      - MONGO_URI=mongodb://database:27017/users
+    depends_on:
+      - database
+
+  hierarchy-service:
+    build: ./services/hierarchy-service
+    ports:
+      - '3002:3002'
+    environment:
+      - MONGO_URI=mongodb://database:27017/folders
+    depends_on:
+      - database
+
+  version-service:
+    build: ./services/version-service
+    ports:
+      - '3003:3003'
+    environment:
+      - MONGO_URI=mongodb://database:27017/documents
+    depends_on:
+      - database
+
+  database:
+    image: mongo
+    ports:
+      - '27017:27017'
