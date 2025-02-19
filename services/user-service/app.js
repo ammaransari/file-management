@@ -6,7 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use('/users', userRoutes);
+app.use('/', userRoutes);
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log('User Service DB Connected');

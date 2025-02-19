@@ -7,7 +7,7 @@ const documentRoutes = require('./routes/documentRoutes');
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use('/documents', documentRoutes);
+app.use('/', documentRoutes);
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log('Version Service DB Connected');

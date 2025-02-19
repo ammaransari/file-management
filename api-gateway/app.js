@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-app.use('/api/users', async (req, res) => {
+app.use('/users', async (req, res) => {
     const response = await axios(`http://user-service:3001${req.url}`, { method: req.method, data: req.body });
     res.json(response.data);
 });
@@ -23,7 +23,7 @@ app.use('/api/users', async (req, res) => {
 //     });
 // });
 
-app.use('/api/folders',authMiddleware, async (req, res) => {
+app.use('/folders',authMiddleware, async (req, res) => {
     try {
         // Forward the request to hierarchy-service
         const response = await axios({
@@ -39,7 +39,7 @@ app.use('/api/folders',authMiddleware, async (req, res) => {
     }
 });
 
-app.use('/api/documents',authMiddleware, async (req, res) => {
+app.use('/documents',authMiddleware, async (req, res) => {
     const response = await axios(`http://version-service:3003${req.url}`, { method: req.method, data: req.body });
     res.json(response.data);
 });

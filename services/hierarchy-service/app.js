@@ -7,7 +7,7 @@ const folderRoutes = require('./routes/folderRoutes');
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use('/folders', folderRoutes);
+app.use('/', folderRoutes);
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log('Hierarchy Service DB Connected');
